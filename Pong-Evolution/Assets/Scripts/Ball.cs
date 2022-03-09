@@ -1,29 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-	[SerializeField] private Rigidbody2D rb;
+	public bool debugMode;
 	[SerializeField] private float speed;
-
 	[SerializeField] private Vector2 startVelocity;
 
-	private Vector2 velocity;
+	public float velocite;
+
+	private Rigidbody2D rb;
+
+	private void Awake()
+	{
+		rb = GetComponent<Rigidbody2D>();
+	}
 
 	private void Start()
 	{
-		rb = GetComponent<Rigidbody2D>();
-		rb.velocity = startVelocity * speed;
+		if (!debugMode)
+		{
+			startVelocity.x = Random.value > .5f ? -1f : 1f;
+			startVelocity.y = Random.value > .5f ? Random.Range(-1f, -.5f) : Random.Range(.5f, 1f);
+			startVelocity.Normalize();
+		}
+		AddForce(startVelocity * speed);
 	}
 
 	private void FixedUpdate()
 	{
-
+		velocite = rb.velocity.magnitude;
 	}
 
-	private void OnCollisionEnter2D(Collision2D collision)
+	public void AddForce(Vector2 force)
 	{
-		Debug.Log("hit");
+		rb.AddForce(force);
+	}
+
+	public Vector2 GetVelocity()
+	{
+		return rb.velocity;
 	}
 }
