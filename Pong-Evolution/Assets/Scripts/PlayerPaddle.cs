@@ -6,25 +6,15 @@ public class PlayerPaddle : Paddle
 
 	private void Update()
 	{
-		if (Input.GetKey(KeyCode.UpArrow))
-		{
-			direction = transform.up;
-		}
-		else if (Input.GetKey(KeyCode.DownArrow))
-		{
-			direction = -transform.up;
-		}
-		else
-		{
-			direction = Vector2.zero;
-		}
+		direction = transform.up * Input.GetAxisRaw("Vertical");
 	}
 
 	private void FixedUpdate()
 	{
 		if (direction.magnitude > 0f)
 		{
-			rb.AddForce(direction * speed * Time.fixedDeltaTime);
+			rb.velocity = direction * speed * Time.fixedDeltaTime;
+			//rb.AddForce(direction * speed * Time.fixedDeltaTime);
 		}
 	}
 }

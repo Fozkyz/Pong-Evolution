@@ -8,14 +8,17 @@ public class ComputerPaddle : Paddle
 	{
 		if (ball != null)
 		{
-			Vector2 direction;
+			Vector2 direction = Vector2.zero;
 			if (ball.GetVelocity().x > 0f)
 			{
 				direction = transform.up * (ball.transform.position.y - transform.position.y);
 			}
 			else
 			{
-				direction = -transform.up * transform.position.y;
+				if (Mathf.Abs(transform.position.y) > .1f)
+				{
+					direction = -transform.up * transform.position.y;
+				}
 			}
 			rb.AddForce(direction.normalized * speed * Time.fixedDeltaTime);
 		}

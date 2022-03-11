@@ -6,14 +6,12 @@ public class Ball : MonoBehaviour
 	[SerializeField] private float speed;
 	[SerializeField] private Vector2 startVelocity;
 
+	[SerializeField] protected float bounceSpeedMulti;
+	[SerializeField] protected float bounceLiftMulti;
+
 	public float velocite;
+	private Vector2 direction;
 
-	private Rigidbody2D rb;
-
-	private void Awake()
-	{
-		rb = GetComponent<Rigidbody2D>();
-	}
 
 	private void Start()
 	{
@@ -23,21 +21,34 @@ public class Ball : MonoBehaviour
 			startVelocity.y = Random.value > .5f ? Random.Range(-1f, -.5f) : Random.Range(.5f, 1f);
 			startVelocity.Normalize();
 		}
-		AddForce(startVelocity * speed);
+		direction = startVelocity;
 	}
 
 	private void FixedUpdate()
 	{
-		velocite = rb.velocity.magnitude;
+		velocite = direction.magnitude;
+		if (direction.magnitude > 0)
+		{
+			transform.Translate(direction * speed * Time.fixedDeltaTime);
+		}
 	}
 
-	public void AddForce(Vector2 force)
+	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		rb.AddForce(force);
+		Vector2 normal = collision.GetContact(0).normal;
+		direction = direction - 2 * Vector2.Dot(normal, direction) * normal;
+		
+		Paddle paddle = collision.gameObject.GetComponent<Paddle>();
+		if (paddle != null)
+		{
+			Vector2 lift = Vector2.Dot(transform.position - paddle.transform.position, paddle.transform.up) * paddle.transform.up * bounceLiftMulti;
+			direction = (direction + lift).normalized * direction.magnitude;
+			direction *= 1 + bounceSpeedMulti;
+		}
 	}
 
 	public Vector2 GetVelocity()
 	{
-		return rb.velocity;
+		return direction;
 	}
 }
