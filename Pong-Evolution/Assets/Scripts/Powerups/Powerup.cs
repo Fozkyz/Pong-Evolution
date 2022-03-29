@@ -4,7 +4,7 @@ public abstract class Powerup : MonoBehaviour
 {
     protected abstract void Activate(Ball ball);
 
-	private void OnCollisionEnter2D(Collision2D collision)
+	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		Ball ball = collision.gameObject.GetComponent<Ball>();
 		if (ball != null)
