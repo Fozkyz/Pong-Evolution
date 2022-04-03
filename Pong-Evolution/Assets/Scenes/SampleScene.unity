@@ -475,7 +475,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a15c642c48bbfc4a979a839b34ac1f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 300
+  basePaddleSpeed: 150
+  minPaddleSpeedLevel: 0
+  maxPaddleSpeedLevel: 4
+  defaultPaddleSpeedLevel: 3
+  paddleSpeedMultiplier: 50
+  speed: 0
   ball: {fileID: 2036167642}
 --- !u!61 &1227965002
 BoxCollider2D:
@@ -490,7 +495,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.5, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -501,7 +506,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 1}
   m_EdgeRadius: 0
 --- !u!50 &1227965003
 Rigidbody2D:
@@ -522,7 +527,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 5
 --- !u!212 &1227965004
 SpriteRenderer:
@@ -588,6 +593,49 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1295906116
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1295906118}
+  - component: {fileID: 1295906117}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1295906117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295906116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b4383e354e01514cb39ea923f256b9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1295906118
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295906116}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1320793543
 GameObject:
@@ -770,7 +818,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1523284276}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10b28b3f5b563c741b70db5d22be0337, type: 3}
+  m_Script: {fileID: 11500000, guid: b01a701ad9040794fa1bb5615a8e912f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &1523284280
@@ -860,7 +908,7 @@ MonoBehaviour:
   speed: 4
   startVelocity: {x: -1, y: 0}
   startSide: 0
-  bounceSpeedMulti: 0.075
+  bounceSpeedMulti: 0.0075
   bounceLiftMulti: 2
   baseBallSize: 0.05
   minBallSizeLevel: 0
@@ -1002,7 +1050,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84a54f124162b114c9a5df150cc10f1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 650
+  basePaddleSpeed: 250
+  minPaddleSpeedLevel: 0
+  maxPaddleSpeedLevel: 4
+  defaultPaddleSpeedLevel: 3
+  paddleSpeedMultiplier: 100
+  speed: 0
 --- !u!61 &2037379007
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1016,7 +1069,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.5, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1027,7 +1080,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 1}
   m_EdgeRadius: 0
 --- !u!50 &2037379008
 Rigidbody2D:
@@ -1048,7 +1101,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 5
 --- !u!212 &2037379009
 SpriteRenderer:

@@ -4,6 +4,12 @@ public class PlayerPaddle : Paddle
 {
 	private Vector2 direction;
 
+	private new void Start()
+	{
+		base.Start();
+		gameManager.SetPlayerPaddle(this);
+	}
+
 	private void Update()
 	{
 		direction = transform.up * Input.GetAxisRaw("Vertical");

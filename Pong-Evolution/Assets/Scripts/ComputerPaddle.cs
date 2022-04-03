@@ -4,6 +4,12 @@ public class ComputerPaddle : Paddle
 {
 	[SerializeField] private Ball ball;
 
+	private new void Start()
+	{
+		base.Start();
+		gameManager.SetComputerPaddle(this);
+	}
+
 	private void FixedUpdate()
 	{
 		if (ball != null)
