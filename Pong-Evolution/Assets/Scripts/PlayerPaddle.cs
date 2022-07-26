@@ -23,4 +23,9 @@ public class PlayerPaddle : Paddle
 			//rb.AddForce(direction * speed * Time.fixedDeltaTime);
 		}
 	}
+
+    public override void OnHit(Ball ball)
+    {
+		gameManager.OnPlayerPaddleHitEvent.Invoke();
+    }
 }

@@ -18,6 +18,7 @@ public abstract class Powerup : MonoBehaviour
 		{
 			Activate(ball);
 		}
+		Destroy(gameObject);
 	}
 
 }

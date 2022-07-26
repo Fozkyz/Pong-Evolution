@@ -1,6 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.Events;
 using UnityEngine;
 
-public class Paddle : MonoBehaviour
+public abstract class Paddle : MonoBehaviour
 {
 
 	[Header("Paddle Speed")]
@@ -10,8 +13,17 @@ public class Paddle : MonoBehaviour
 	[SerializeField] protected int defaultPaddleSpeedLevel;
 	[SerializeField] protected float paddleSpeedMultiplier;
 
-	[SerializeField] protected float speed;
-	protected float speedLevel;
+	[Header("Paddle Size")]
+	[SerializeField] protected float basePaddleSize;
+	[SerializeField] protected int minPaddleSizeLevel;
+	[SerializeField] protected int maxPaddleSizeLevel;
+	[SerializeField] protected int defaultPaddleSizeLevel;
+	[SerializeField] protected float paddleSizeMultiplier;
+
+	protected float speed;
+	protected int speedLevel;
+	protected float paddleSize;
+	protected int paddleSizeLevel;
 	protected GameManager gameManager;
 	protected Rigidbody2D rb;
 
@@ -24,7 +36,9 @@ public class Paddle : MonoBehaviour
 	protected void Start()
 	{
 		speedLevel = defaultPaddleSpeedLevel;
+		paddleSizeLevel = defaultPaddleSizeLevel;
 		ChangePaddleSpeed(0);
+		ChangePaddleSize(0);
 	}
 
 	public void ChangePaddleSpeed(int delta)
@@ -32,4 +46,14 @@ public class Paddle : MonoBehaviour
 		speedLevel = Mathf.Clamp(speedLevel + delta, minPaddleSpeedLevel, maxPaddleSpeedLevel);
 		speed = basePaddleSpeed + speedLevel * paddleSpeedMultiplier;
 	}
+
+	public void ChangePaddleSize(int delta)
+    {
+		paddleSizeLevel = Mathf.Clamp(paddleSizeLevel + delta, minPaddleSizeLevel, maxPaddleSizeLevel);
+		paddleSize = basePaddleSize + paddleSizeLevel * paddleSizeMultiplier;
+		//transform.localScale = new Vector3(1, 8, 1) * paddleSize;
+		transform.localScale = new Vector3(transform.localScale.x, 8 * paddleSize, transform.localScale.z);
+	}
+
+	public abstract void OnHit(Ball ball);
 }

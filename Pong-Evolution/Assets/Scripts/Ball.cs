@@ -10,6 +10,7 @@ public class Ball : MonoBehaviour
 	[Header("Ball bounce")]
 	[SerializeField] protected float bounceSpeedMulti;
 	[SerializeField] protected float bounceLiftMulti;
+	[SerializeField] private LayerMask ScoreMask;
 
 	[Header("Ball Size")]
 	[SerializeField] protected float baseBallSize;
@@ -18,17 +19,18 @@ public class Ball : MonoBehaviour
 	[SerializeField] protected int defaultBallSizeLevel;
 	[SerializeField] protected float ballSizeMultiplier;
 
-	public float velocite;
 	private Vector2 direction;
 
 	private float ballSize;
 	private int ballSizeLevel;
 
+	private GameManager gameManager;
+
 	private void Start()
 	{
+		gameManager = FindObjectOfType<GameManager>();
 		if (!debugMode)
 		{
-			//startVelocity.x = Random.value > .5f ? -1f : 1f;
 			startVelocity.x = startSide != 0 ? startSide : Random.value > .5f ? -1f : 1f;
 			startVelocity.y = Random.value > .5f ? Random.Range(-1f, -.5f) : Random.Range(.5f, 1f);
 			startVelocity.Normalize();
@@ -42,7 +44,6 @@ public class Ball : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		velocite = direction.magnitude;
 		if (direction.magnitude > 0)
 		{
 			transform.Translate(direction * speed * Time.fixedDeltaTime);
@@ -55,6 +56,11 @@ public class Ball : MonoBehaviour
 		{
 			return;
 		}
+        if (((1<<collision.gameObject.layer) & ScoreMask) != 0)
+		{
+			gameManager.ScorePoint(direction.x > 0, this);
+        }
+
 		Vector2 normal = collision.GetContact(0).normal;
 		direction = direction - 2 * Vector2.Dot(normal, direction) * normal;
 		
@@ -64,6 +70,7 @@ public class Ball : MonoBehaviour
 			Vector2 lift = Vector2.Dot(transform.position - paddle.transform.position, paddle.transform.up) * paddle.transform.up * bounceLiftMulti;
 			direction = (direction + lift).normalized * direction.magnitude;
 			direction *= 1 + bounceSpeedMulti;
+			paddle.OnHit(this);
 		}
 	}
 
