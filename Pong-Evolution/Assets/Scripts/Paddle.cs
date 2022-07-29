@@ -24,6 +24,7 @@ public abstract class Paddle : MonoBehaviour
 	protected int speedLevel;
 	protected float paddleSize;
 	protected int paddleSizeLevel;
+
 	protected GameManager gameManager;
 	protected Rigidbody2D rb;
 
