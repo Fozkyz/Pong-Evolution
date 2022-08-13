@@ -20,6 +20,8 @@ public abstract class Paddle : MonoBehaviour
 	[SerializeField] protected int defaultPaddleSizeLevel;
 	[SerializeField] protected float paddleSizeMultiplier;
 
+	[SerializeField] protected Gun gun;
+
 	protected float speed;
 	protected int speedLevel;
 	protected float paddleSize;
@@ -55,6 +57,11 @@ public abstract class Paddle : MonoBehaviour
 		//transform.localScale = new Vector3(1, 8, 1) * paddleSize;
 		transform.localScale = new Vector3(transform.localScale.x, 8 * paddleSize, transform.localScale.z);
 	}
+
+	public void SetGunProjectileType(ProjectileType pType)
+    {
+		gun.SetProjectileType(pType);
+    }
 
 	public abstract void OnHit(Ball ball);
 }

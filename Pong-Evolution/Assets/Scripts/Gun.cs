@@ -12,7 +12,6 @@ public class Gun : MonoBehaviour
 
 	[SerializeField] private int maxAmmunition;
 	[SerializeField] private float cooldown;
-	[SerializeField] private KeyCode shootKey;
 
 	[SerializeField] private ProjectileType projectileType;
 
@@ -32,40 +31,43 @@ public class Gun : MonoBehaviour
 	{
 		timeSinceLastShot += Time.deltaTime;
 
-		if (Input.GetKey(shootKey))
-        {
-			if (timeSinceLastShot >= cooldown)
-            {
-				TryShoot();
-				timeSinceLastShot = 0f;
-				shootProjectileWhenReady = false;
-            }
-			else if (timeSinceLastShot >= cooldown * .75f)
-            {
-				shootProjectileWhenReady = true;
-            }
-        }
 		if (shootProjectileWhenReady && timeSinceLastShot >= cooldown)
         {
-			TryShoot();
+			TriggerShoot();
 			timeSinceLastShot = 0f;
 			shootProjectileWhenReady = false;
         }
 	}
 
-	private void TryShoot()
+	public void TryShoot()
+    {
+		if (timeSinceLastShot >= cooldown)
+		{
+			TriggerShoot();
+			timeSinceLastShot = 0f;
+			shootProjectileWhenReady = false;
+		}
+		else if (timeSinceLastShot >= cooldown * .75f)
+		{
+			shootProjectileWhenReady = true;
+		}
+	}
+
+	private void TriggerShoot()
     {
 		if (currentAmmunition > 0)
         {
-			Quaternion spawningRotation = shootTransform.position.x > transform.position.x ? Quaternion.identity : Quaternion.Euler(0, 180, 0);
+			Quaternion spawningRotation = shootTransform.position.x > transform.position.x ? Quaternion.identity : Quaternion.Euler(0, 0, 180);
 			switch (projectileType)
 			{
 				case ProjectileType.FREEZING:
 					Instantiate(freezingProjectileGO, shootTransform.position, spawningRotation);
+					currentAmmunition--;
 					break;
 
 				case ProjectileType.DOWNSIZING:
 					Instantiate(downsizingProjectileGO, shootTransform.position, spawningRotation);
+					currentAmmunition--;
 					break;
 
 				default:
@@ -73,6 +75,10 @@ public class Gun : MonoBehaviour
 					// Play sound ?
 					break;
 			}
+			if (currentAmmunition == 0)
+            {
+				projectileType = ProjectileType.NONE;
+            }
 		}
 		else
         {
@@ -87,8 +93,8 @@ public class Gun : MonoBehaviour
 		currentAmmunition = maxAmmunition;
 	}
 
-	public void SetShootKey(KeyCode key)
+	public ProjectileType GetProjectileType()
     {
-		shootKey = key;
+		return projectileType;
     }
 }

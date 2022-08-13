@@ -11,7 +11,7 @@ public class Projectile : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		transform.Translate(transform.right * projectileSpeed * Time.fixedDeltaTime);
+		transform.Translate(Vector3.right * projectileSpeed * Time.fixedDeltaTime);
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision)

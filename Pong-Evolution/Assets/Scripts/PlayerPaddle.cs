@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerPaddle : Paddle
 {
+	[SerializeField] private KeyCode shootKey;
+
 	private Vector2 direction;
 
 	private new void Start()
@@ -13,6 +15,10 @@ public class PlayerPaddle : Paddle
 	private void Update()
 	{
 		direction = transform.up * Input.GetAxisRaw("Vertical");
+		if (Input.GetKey(shootKey) && gun.GetProjectileType() != ProjectileType.NONE)
+        {
+			gun.TryShoot();
+        }
 	}
 
 	private void FixedUpdate()

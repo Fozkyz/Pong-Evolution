@@ -30,6 +30,10 @@ public class ComputerPaddle : Paddle
 			}
 			rb.AddForce(direction.normalized * speed * Time.fixedDeltaTime);
 		}
+		if (gun.GetProjectileType() != ProjectileType.NONE)
+        {
+			gun.TryShoot();
+        }
 	}
 
     public override void OnHit(Ball ball)
