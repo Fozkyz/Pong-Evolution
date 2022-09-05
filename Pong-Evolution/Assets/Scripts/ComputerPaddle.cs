@@ -9,12 +9,15 @@ public class ComputerPaddle : Paddle
 		base.Start();
 		gameManager.SetComputerPaddle(this);
 		gameManager.OnLaunchEvent.AddListener(OnLaunch);
+		gameManager.OnGamePausedEvent.AddListener(OnGamePaused);
+		gameManager.OnGameResumedEvent.AddListener(OnGameResumed);
 		gameManager.OnPlayerPaddleHitEvent.AddListener(SetFocusBall);
+		gameManager.OnLastBallScoredEvent.AddListener(OnLastBallScored);
 	}
 
 	private void FixedUpdate()
 	{
-		if (focusBall != null)
+		if (focusBall != null && isGameRunning)
 		{
 			Vector2 direction = Vector2.zero;
 			if (focusBall.GetVelocity().x > 0f)
@@ -30,7 +33,7 @@ public class ComputerPaddle : Paddle
 			}
 			rb.AddForce(direction.normalized * speed * Time.fixedDeltaTime);
 		}
-		if (gun.GetProjectileType() != ProjectileType.NONE)
+		if (gun.GetProjectileType() != ProjectileType.NONE && isGameRunning)
         {
 			gun.TryShoot();
         }
@@ -42,12 +45,29 @@ public class ComputerPaddle : Paddle
 		gameManager.OnComputerPaddleHitEvent.Invoke();
     }
 
-    void OnLaunch()
+    private void OnLaunch()
     {
 		SetFocusBall();
+		isGameRunning = true;
     }
 
-	void SetFocusBall()
+	private void OnGamePaused()
+	{
+		isGameRunning = false;
+	}
+
+	private void OnGameResumed()
+	{
+		isGameRunning = true;
+	}
+
+	private void OnLastBallScored()
+	{
+		isGameRunning = false;
+		focusBall = null;
+	}
+
+	private void SetFocusBall()
     {
 		float dist = Mathf.Infinity;
 		foreach (Ball ball in gameManager.GetBallList())

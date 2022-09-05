@@ -30,6 +30,8 @@ public abstract class Paddle : MonoBehaviour
 	protected GameManager gameManager;
 	protected Rigidbody2D rb;
 
+	protected bool isGameRunning;
+
 	private void Awake()
 	{
 		rb = GetComponent<Rigidbody2D>();
@@ -40,6 +42,7 @@ public abstract class Paddle : MonoBehaviour
 	{
 		speedLevel = defaultPaddleSpeedLevel;
 		paddleSizeLevel = defaultPaddleSizeLevel;
+		isGameRunning = false;
 		ChangePaddleSpeed(0);
 		ChangePaddleSize(0);
 	}

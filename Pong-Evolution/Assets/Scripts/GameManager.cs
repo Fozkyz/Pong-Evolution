@@ -8,6 +8,9 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
 	public UnityEvent OnLaunchEvent;
+	public UnityEvent OnGamePausedEvent;
+	public UnityEvent OnGameResumedEvent;
+	public UnityEvent OnLastBallScoredEvent;
 	public UnityEvent OnPlayerPaddleHitEvent;
 	public UnityEvent OnComputerPaddleHitEvent;
 
@@ -135,6 +138,7 @@ public class GameManager : MonoBehaviour
         {
 			ScoreBOPoint(leftPlayerScore > rightPlayerScore);
         }
+		OnLastBallScoredEvent.Invoke();
 		isGameRunning = false;
     }
 
