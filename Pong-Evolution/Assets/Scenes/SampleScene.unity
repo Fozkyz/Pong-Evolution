@@ -1912,7 +1912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a90cdbf3a935d54ab98e0a55c54c73a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenPowerupSpawn: 8
+  timeBetweenPowerupSpawn: 6
   powerupPrefabs:
   - {fileID: 2986595084183402363, guid: 09050712ddf1cd04f96b45272da05624, type: 3}
   - {fileID: 8174585573330440065, guid: 2af2146831375314680596eeb4a03253, type: 3}
@@ -1921,6 +1921,10 @@ MonoBehaviour:
   - {fileID: 3198776999761597588, guid: a97fd80a668fc4a42a2793494ea39ca4, type: 3}
   - {fileID: 7566548712642917134, guid: 7fb88adf3edeb124a934407f42d7710b, type: 3}
   - {fileID: 4558169315913253711, guid: da120417798741b48a2fc02483b3dcb4, type: 3}
+  - {fileID: 3198776999761597588, guid: a97fd80a668fc4a42a2793494ea39ca4, type: 3}
+  - {fileID: 3198776999761597588, guid: a97fd80a668fc4a42a2793494ea39ca4, type: 3}
+  - {fileID: 4558169315913253711, guid: da120417798741b48a2fc02483b3dcb4, type: 3}
+  - {fileID: 8174585573330440065, guid: 2af2146831375314680596eeb4a03253, type: 3}
 --- !u!1 &1320793543
 GameObject:
   m_ObjectHideFlags: 0

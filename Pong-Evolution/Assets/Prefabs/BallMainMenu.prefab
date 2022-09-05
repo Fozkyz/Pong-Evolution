@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4425261206833520042}
   - component: {fileID: 4425261206833520041}
   m_Layer: 6
-  m_Name: Ball
+  m_Name: BallMainMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4425261206833520046}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 0
-  speed: 4
+  speed: 6
   startVelocity: {x: -1, y: 0}
   startSide: 0
   bounceSpeedMulti: 0.01
@@ -106,11 +106,11 @@ MonoBehaviour:
   ScoreMask:
     serializedVersion: 2
     m_Bits: 128
-  baseBallSize: 0.05
+  baseBallSize: 0.1
   minBallSizeLevel: 0
   maxBallSizeLevel: 3
   defaultBallSizeLevel: 1
-  ballSizeMultiplier: 0.05
+  ballSizeMultiplier: 0.1
 --- !u!58 &4425261206833520042
 CircleCollider2D:
   m_ObjectHideFlags: 0
