@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class MainMenuManager : MonoBehaviour
@@ -7,6 +8,8 @@ public class MainMenuManager : MonoBehaviour
 	[SerializeField] private float timeBetweenPowerupSpawn;
 	[SerializeField] private List<GameObject> powerupPrefabs;
 	[SerializeField] private GameObject ballPrefab;
+
+	[SerializeField] private GameObject lPowerupSpawner, rPowerupSpawner;
 
 	private float timeSinceLastPowerupSpawn;
 
@@ -31,8 +34,20 @@ public class MainMenuManager : MonoBehaviour
 	private void SpawnPowerup()
 	{
 		GameObject powerupToSpawn = powerupPrefabs[Random.Range(0, powerupPrefabs.Count)];
-		Vector3 spawnLocation = new Vector3(Random.Range(-4f, 4f), Random.Range(-4f, 4f), 0);
+		if (Random.Range(0, 2) < .5f)
+        {
+			Vector3 spawnLocation = new Vector3(Random.Range(3f, 8f), Random.Range(-4f, 1f), 0);
+			Instantiate(powerupToSpawn, spawnLocation, Quaternion.identity);
+        }
+		else
+        {
+			Vector3 spawnLocation = new Vector3(Random.Range(-8f, -3f), Random.Range(-4f, 1f), 0);
+			Instantiate(powerupToSpawn, spawnLocation, Quaternion.identity);
+        }
+	}
 
-		Instantiate(powerupToSpawn, spawnLocation, Quaternion.identity);
+	public void PlaySingleplayer()
+    {
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 	}
 }

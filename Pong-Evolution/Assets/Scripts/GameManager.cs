@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine;
@@ -18,6 +19,11 @@ public class GameManager : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI rightScoreText;
 	[SerializeField] private List<RawImage> leftPlayerBOScoreUI;
 	[SerializeField] private List<RawImage> rightPlayerBOScoreUI;
+	[SerializeField] private GameObject pressToStartPanel;
+	[SerializeField] private GameObject leftPlayerScoredPanel;
+	[SerializeField] private GameObject rightPlayerScoredPanel;
+	[SerializeField] private GameObject leftPlayerWinsPanel;
+	[SerializeField] private GameObject rightPlayerWinsPanel;
 	[SerializeField] private GameObject ballPrefab;
 
 	private PlayerPaddle playerPaddle;
@@ -29,6 +35,8 @@ public class GameManager : MonoBehaviour
 	private int rightPlayerBOScore;
 
 	private bool isGameRunning;
+	private bool canResumeGame;
+	private bool pressToReturnToMenu;
 
 	private List<Ball> ballList;
 
@@ -41,23 +49,38 @@ public class GameManager : MonoBehaviour
 		rightPlayerBOScore = 0;
 		leftScoreText.text = leftPlayerScore.ToString();
 		rightScoreText.text = rightPlayerScore.ToString();
+		leftPlayerScoredPanel.SetActive(false);
+		rightPlayerScoredPanel.SetActive(false);
+		leftPlayerWinsPanel.SetActive(false);
+		rightPlayerWinsPanel.SetActive(false);
+		canResumeGame = true;
+		pressToReturnToMenu = false;
 	}
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isGameRunning)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-			isGameRunning = true;
-			Launch();
-        }
+			if (pressToReturnToMenu)
+			{
+				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+			}
+			else if (!isGameRunning && canResumeGame)
+            {
+				isGameRunning = true;
+				Launch();
+            }
+		}
     }
 
     private void Launch()
     {
+		canResumeGame = false;
 		leftPlayerScore = 0;
 		leftScoreText.text = leftPlayerScore.ToString();
 		rightPlayerScore = 0;
 		rightScoreText.text = rightPlayerScore.ToString();
+		pressToStartPanel.SetActive(false);
 
 		ballList = new List<Ball>();
 		Ball ball = Instantiate(ballPrefab, Vector3.zero, Quaternion.identity).GetComponent<Ball>();
@@ -155,6 +178,10 @@ public class GameManager : MonoBehaviour
             {
 				OnPlayerWins(true);
             }
+			else
+            {
+				StartCoroutine(DisplayPlayerScored(true));
+            }
         }
 		else
         {
@@ -167,11 +194,44 @@ public class GameManager : MonoBehaviour
 			{
 				OnPlayerWins(false);
 			}
+			else
+			{
+				StartCoroutine(DisplayPlayerScored(false));
+			}
 		}
+    }
+
+	IEnumerator DisplayPlayerScored(bool leftPlayerScored)
+    {
+		if (leftPlayerScored)
+        {
+			leftPlayerScoredPanel.SetActive(true);
+        }
+		else
+        {
+			rightPlayerScoredPanel.SetActive(true);
+        }
+		
+		yield return new WaitForSeconds(2.0f);
+
+		leftPlayerScoredPanel.SetActive(false);
+		rightPlayerScoredPanel.SetActive(false);
+
+		pressToStartPanel.SetActive(true);
+		canResumeGame = true;
     }
 
 	private void OnPlayerWins(bool leftPlayerWins)
     {
-		print("Game is over !");
-    }
+		pressToReturnToMenu = true;
+		if (leftPlayerWins)
+        {
+			leftPlayerWinsPanel.SetActive(true);
+		}
+		else
+        {
+			rightPlayerWinsPanel.SetActive(true);
+		}
+
+	}
 }
