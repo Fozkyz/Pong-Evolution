@@ -40,9 +40,13 @@ public abstract class Paddle : MonoBehaviour
 
 	protected void Start()
 	{
+		isGameRunning = false;
+	}
+
+	public void ResetPaddle()
+    {
 		speedLevel = defaultPaddleSpeedLevel;
 		paddleSizeLevel = defaultPaddleSizeLevel;
-		isGameRunning = false;
 		ChangePaddleSpeed(0);
 		ChangePaddleSize(0);
 	}

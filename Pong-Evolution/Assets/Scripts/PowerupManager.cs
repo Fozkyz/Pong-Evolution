@@ -35,7 +35,7 @@ public class PowerupManager : MonoBehaviour
 			{
 				SpawnPowerup();
 				timeSinceLastPowerupSpawn = 0f;
-				timeBetweenPowerupSpawn *= 1.2f;
+				timeBetweenPowerupSpawn *= 1.05f;
 			}
 		}
 	}
