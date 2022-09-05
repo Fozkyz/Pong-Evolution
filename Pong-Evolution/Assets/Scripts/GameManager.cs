@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 	[SerializeField] private GameObject pressToStartPanel;
 	[SerializeField] private GameObject leftPlayerScoredPanel;
 	[SerializeField] private GameObject rightPlayerScoredPanel;
+	[SerializeField] private GameObject drawPanel;
 	[SerializeField] private GameObject leftPlayerWinsPanel;
 	[SerializeField] private GameObject rightPlayerWinsPanel;
 	[SerializeField] private GameObject ballPrefab;
@@ -51,6 +52,7 @@ public class GameManager : MonoBehaviour
 		rightScoreText.text = rightPlayerScore.ToString();
 		leftPlayerScoredPanel.SetActive(false);
 		rightPlayerScoredPanel.SetActive(false);
+		drawPanel.SetActive(false);
 		leftPlayerWinsPanel.SetActive(false);
 		rightPlayerWinsPanel.SetActive(false);
 		canResumeGame = true;
@@ -81,6 +83,9 @@ public class GameManager : MonoBehaviour
 		rightPlayerScore = 0;
 		rightScoreText.text = rightPlayerScore.ToString();
 		pressToStartPanel.SetActive(false);
+
+		playerPaddle.ResetPaddle();
+		computerPaddle.ResetPaddle();
 
 		ballList = new List<Ball>();
 		Ball ball = Instantiate(ballPrefab, Vector3.zero, Quaternion.identity).GetComponent<Ball>();
@@ -161,6 +166,10 @@ public class GameManager : MonoBehaviour
         {
 			ScoreBOPoint(leftPlayerScore > rightPlayerScore);
         }
+		else
+        {
+			StartCoroutine(DisplayDraw());
+        }
 		OnLastBallScoredEvent.Invoke();
 		isGameRunning = false;
     }
@@ -217,6 +226,15 @@ public class GameManager : MonoBehaviour
 		leftPlayerScoredPanel.SetActive(false);
 		rightPlayerScoredPanel.SetActive(false);
 
+		pressToStartPanel.SetActive(true);
+		canResumeGame = true;
+    }
+
+	IEnumerator DisplayDraw()
+    {
+		drawPanel.SetActive(true);
+		yield return new WaitForSeconds(2.0f);
+		drawPanel.SetActive(false);
 		pressToStartPanel.SetActive(true);
 		canResumeGame = true;
     }

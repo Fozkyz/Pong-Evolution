@@ -93,5 +93,9 @@ public class Ball : MonoBehaviour
 		ballComponent.debugMode = false;
 		ballComponent.startSide = (int)Mathf.Sign(direction.x);
 		ballComponent.defaultBallSizeLevel = ballSizeLevel;
+		if (gameManager != null)
+        {
+			gameManager.AddBallToList(ballComponent);
+        }
 	}
 }
