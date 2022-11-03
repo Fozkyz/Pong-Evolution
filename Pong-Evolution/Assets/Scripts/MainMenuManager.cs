@@ -50,4 +50,9 @@ public class MainMenuManager : MonoBehaviour
     {
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 	}
+
+	public void PlayMultiplayer()
+	{
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+	}
 }

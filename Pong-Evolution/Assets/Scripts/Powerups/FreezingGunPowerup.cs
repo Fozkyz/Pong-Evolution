@@ -8,11 +8,11 @@ public class FreezingGunPowerup : Powerup
 	{
 		if (ball.GetVelocity().x < 0f)
 		{
-			gameManager.GetComputerPaddle().SetGunProjectileType(ProjectileType.FREEZING);
+			gameManager.GetRightPaddle().SetGunProjectileType(ProjectileType.FREEZING);
 		}
 		else
 		{
-			gameManager.GetPlayerPaddle().SetGunProjectileType(ProjectileType.FREEZING);
+			gameManager.GetLeftPaddle().SetGunProjectileType(ProjectileType.FREEZING);
 		}
 	}
 }

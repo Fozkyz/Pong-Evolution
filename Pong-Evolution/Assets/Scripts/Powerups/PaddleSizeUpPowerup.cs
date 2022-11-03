@@ -6,11 +6,11 @@ public class PaddleSizeUpPowerup : Powerup
 	{
 		if (ball.GetVelocity().x < 0)
 		{
-			gameManager.GetComputerPaddle().ChangePaddleSize(1);
+			gameManager.GetRightPaddle().ChangePaddleSize(1);
 		}
 		else
 		{
-			gameManager.GetPlayerPaddle().ChangePaddleSize(1);
+			gameManager.GetLeftPaddle().ChangePaddleSize(1);
 		}
 	}
 }

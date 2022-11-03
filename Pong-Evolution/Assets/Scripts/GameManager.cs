@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
 	public UnityEvent OnPlayerPaddleHitEvent;
 	public UnityEvent OnComputerPaddleHitEvent;
 
+	[SerializeField] bool isGameMulti;
+
 	[SerializeField] private TextMeshProUGUI leftScoreText;
 	[SerializeField] private TextMeshProUGUI rightScoreText;
 	[SerializeField] private List<RawImage> leftPlayerBOScoreUI;
@@ -28,6 +30,7 @@ public class GameManager : MonoBehaviour
 	[SerializeField] private GameObject ballPrefab;
 
 	private PlayerPaddle playerPaddle;
+	private PlayerPaddle playerPaddle2;
 	private ComputerPaddle computerPaddle;
 
 	private int leftPlayerScore;
@@ -65,7 +68,7 @@ public class GameManager : MonoBehaviour
         {
 			if (pressToReturnToMenu)
 			{
-				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+				SceneManager.LoadScene(0);
 			}
 			else if (!isGameRunning && canResumeGame)
             {
@@ -85,7 +88,13 @@ public class GameManager : MonoBehaviour
 		pressToStartPanel.SetActive(false);
 
 		playerPaddle.ResetPaddle();
-		computerPaddle.ResetPaddle();
+		if (isGameMulti)
+		{
+			playerPaddle2.ResetPaddle();
+		} else
+		{
+			computerPaddle.ResetPaddle();
+		}
 
 		ballList = new List<Ball>();
 		Ball ball = Instantiate(ballPrefab, Vector3.zero, Quaternion.identity).GetComponent<Ball>();
@@ -103,6 +112,16 @@ public class GameManager : MonoBehaviour
 		playerPaddle = paddle;
 	}
 
+	public PlayerPaddle GetPlayerPaddle2()
+	{
+		return playerPaddle2;
+	}
+
+	public void SetPlayerPaddle2(PlayerPaddle paddle)
+	{
+		playerPaddle2 = paddle;
+	}
+
 	public ComputerPaddle GetComputerPaddle()
 	{
 		return computerPaddle;
@@ -111,6 +130,23 @@ public class GameManager : MonoBehaviour
 	public void SetComputerPaddle(ComputerPaddle paddle)
 	{
 		computerPaddle = paddle;
+	}
+
+	public Paddle GetLeftPaddle()
+	{
+		return playerPaddle;
+	}
+
+	public Paddle GetRightPaddle()
+	{
+		if (isGameMulti)
+		{
+			return playerPaddle2;
+		}
+		else
+		{
+			return computerPaddle;
+		}
 	}
 
 	public List<Ball> GetBallList()

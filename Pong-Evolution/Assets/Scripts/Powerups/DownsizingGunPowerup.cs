@@ -8,11 +8,11 @@ public class DownsizingGunPowerup : Powerup
     {
 		if (ball.GetVelocity().x < 0f)
 		{
-			gameManager.GetComputerPaddle().SetGunProjectileType(ProjectileType.DOWNSIZING);
+			gameManager.GetRightPaddle().SetGunProjectileType(ProjectileType.DOWNSIZING);
 		}
 		else
 		{
-			gameManager.GetPlayerPaddle().SetGunProjectileType(ProjectileType.DOWNSIZING);
+			gameManager.GetLeftPaddle().SetGunProjectileType(ProjectileType.DOWNSIZING);
 		}
 	}
 }

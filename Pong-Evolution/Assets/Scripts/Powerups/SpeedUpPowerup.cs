@@ -6,11 +6,11 @@ public class SpeedUpPowerup : Powerup
 	{
 		if (ball.GetVelocity().x < 0f)
 		{
-			gameManager.GetComputerPaddle().ChangePaddleSpeed(1);
+			gameManager.GetRightPaddle().ChangePaddleSpeed(1);
 		}
 		else
 		{
-			gameManager.GetPlayerPaddle().ChangePaddleSpeed(1);
+			gameManager.GetLeftPaddle().ChangePaddleSpeed(1);
 		}
 	}
 }

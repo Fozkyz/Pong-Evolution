@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class PlayerPaddle : Paddle
 {
+	[SerializeField] bool isLeftPlayer;
+
+	[SerializeField] private KeyCode upKey;
+	[SerializeField] private KeyCode downKey;
 	[SerializeField] private KeyCode shootKey;
 
 	private Vector2 direction;
@@ -9,7 +13,14 @@ public class PlayerPaddle : Paddle
 	private new void Start()
 	{
 		base.Start();
-		gameManager.SetPlayerPaddle(this);
+		if (isLeftPlayer)
+		{
+			gameManager.SetPlayerPaddle(this);
+		}
+		else
+		{
+			gameManager.SetPlayerPaddle2(this);
+		}
 		gameManager.OnLaunchEvent.AddListener(OnLaunch);
 		gameManager.OnGamePausedEvent.AddListener(OnGamePaused);
 		gameManager.OnGameResumedEvent.AddListener(OnGameResumed);
@@ -18,7 +29,16 @@ public class PlayerPaddle : Paddle
 
 	private void Update()
 	{
-		direction = transform.up * Input.GetAxisRaw("Vertical");
+		direction = Vector2.zero;
+		if (Input.GetKey(upKey))
+		{
+			direction += (Vector2) transform.up;
+		}
+		if (Input.GetKey(downKey))
+		{
+			direction -= (Vector2)transform.up;
+		}
+		//direction = transform.up * Input.GetAxisRaw("Vertical");
 		if (Input.GetKey(shootKey) && gun.GetProjectileType() != ProjectileType.NONE && isGameRunning)
         {
 			gun.TryShoot();
